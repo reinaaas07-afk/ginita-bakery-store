@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useBakery } from '../context/BakeryContext';
 import { Order } from '../types/bakery';
-import { X, CheckCircle, CreditCard, Landmark, Truck, Link2, MessageSquare, ShieldCheck, MapPin, Calendar, Clock } from 'lucide-react';
+import { X, CheckCircle, CreditCard, Landmark, Truck, Link2, MessageSquare, ShieldCheck, MapPin, Calendar, Clock, AlertCircle } from 'lucide-react';
 
 export const CheckoutModal: React.FC = () => {
   const {
@@ -14,6 +14,7 @@ export const CheckoutModal: React.FC = () => {
     appliedCoupon,
     createOrder,
     isDateBlocked,
+    showToast,
   } = useBakery();
 
   // Form Fields
@@ -24,6 +25,7 @@ export const CheckoutModal: React.FC = () => {
   const [deliveryMethod, setDeliveryMethod] = useState<'delivery' | 'pickup'>('delivery');
   const [address, setAddress] = useState('');
   const [notes, setNotes] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   
   // Tomorrow + 2 days default
   const defaultDate = new Date();
@@ -52,19 +54,23 @@ export const CheckoutModal: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
 
     if (isSelectedDateBlocked) {
-      alert(`La fecha ${deliveryDate} está bloqueada / no disponible. Por favor selecciona otra fecha.`);
+      setErrorMessage(`La fecha ${deliveryDate} está bloqueada / no disponible. Por favor selecciona otra fecha.`);
+      showToast(`⚠️ Fecha ${deliveryDate} no disponible`);
       return;
     }
 
     if (!name.trim() || !whatsapp.trim()) {
-      alert('Por favor completa tu nombre y número de WhatsApp.');
+      setErrorMessage('Por favor completa tu nombre y número de WhatsApp.');
+      showToast('⚠️ Completa tu nombre y WhatsApp');
       return;
     }
 
     if (deliveryMethod === 'delivery' && !address.trim()) {
-      alert('Por favor ingresa tu dirección para el envío.');
+      setErrorMessage('Por favor ingresa tu dirección para el envío.');
+      showToast('⚠️ Ingresa la dirección de entrega');
       return;
     }
 
@@ -542,6 +548,14 @@ ${confirmedOrder.discount > 0 ? `✨ *Descuento:* -RD$ ${confirmedOrder.discount
                 </span>
               </div>
             </div>
+
+            {/* Error message banner */}
+            {errorMessage && (
+              <div className="p-3 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs font-semibold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
 
             {/* Submit Button */}
             <button

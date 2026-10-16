@@ -136,8 +136,8 @@ export const CustomCakeBuilder: React.FC = () => {
     setIsCartOpen(true);
   };
 
-  const handleWhatsAppQuote = () => {
-    const message = `*SOLICITUD DE BIZCOCHO PERSONALIZADO - GINITA BAKERY*
+  const getWhatsAppMessage = () => {
+    return encodeURIComponent(`*SOLICITUD DE BIZCOCHO PERSONALIZADO - GINITA BAKERY*
 ---------------------------------------
 🎂 *Tamaño:* ${selectedSize.label}
 🍰 *Masa:* ${selectedFlavor}
@@ -151,10 +151,7 @@ export const CustomCakeBuilder: React.FC = () => {
 📝 *Instrucciones especiales:* ${specialInstructions || 'Ninguna'}
 💰 *Presupuesto Estimado:* RD$ ${calculatedPrice.toLocaleString()}
 ---------------------------------------
-¡Hola! Me encantaría confirmar este pedido con ustedes.`;
-
-    const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/18295551284?text=${encoded}`, '_blank');
+¡Hola! Me encantaría confirmar este pedido con ustedes.`);
   };
 
   return (
@@ -247,13 +244,15 @@ export const CustomCakeBuilder: React.FC = () => {
                   <ShoppingBag className="w-4 h-4" />
                   <span>{isSelectedDateBlocked ? 'Fecha No Disponible' : 'Agregar al Carrito de Compras'}</span>
                 </button>
-                <button
-                  onClick={handleWhatsAppQuote}
+                <a
+                  href={`https://wa.me/18295551284?text=${getWhatsAppMessage()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl text-xs transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Pedir / Cotizar por WhatsApp Directo</span>
-                </button>
+                </a>
               </div>
 
               <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-stone-500">
