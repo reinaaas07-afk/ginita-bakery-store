@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #2D3748;
+    background-color: #FAFBF9;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Custom festive fairy lights subtle glow */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-twinkle {
+  animation: twinkle 2.5s ease-in-out infinite;
+}
+
+/* Custom subtle falling snow */
+@keyframes snowfall {
+  0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(100vh) translateX(25px); opacity: 0; }
+}
+
+.snowflake-anim {
+  animation: snowfall linear infinite;
+}

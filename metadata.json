@@ -1,0 +1,6 @@
+{
+  "name": "Ginita Bakery - Cakes & More",
+  "description": "Tienda online premium de Ginita Bakery. Bizcochos personalizados, brownies artesanales, postres, ponches y colección navideña exclusiva.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
